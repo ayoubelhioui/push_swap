@@ -140,6 +140,7 @@ int *allocate(t_stack **head, int size)
         array[i++] = temp->content;
         temp = temp ->next;
     }
+    quick_sort(array, 0, size - 1);
     return (array);
 }
 
@@ -150,7 +151,7 @@ void    change_values_to_indexes(t_stack **head_a, int size)
 
     temp = (*head_a);
     
-    array = ft_allocate_and_sort(head_a, size);
+    array = allocate(head_a, size);
     while (temp)
     {
         temp ->index = get_index(temp->content, array, size);
@@ -161,7 +162,7 @@ void    change_values_to_indexes(t_stack **head_a, int size)
 void    sort_five(t_stack **head_a, t_stack **head_b)
 {
     int *array;
-    array = ft_allocate_and_sort(head_a, 5);
+    array = allocate(head_a, 5);
     int i = 0;
     while (i < 2)
     {
@@ -189,47 +190,61 @@ void    b_to_a(t_stack **head_a, t_stack **head_b)
         size--;
     }
 }
+t_stack *to_the_last(t_stack **head_a)
+{
+    t_stack *temp;
 
+    temp = (*head_a);
+    while (temp ->next)
+        temp = temp ->next;
+    return (temp);
+}
 void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
 {
-    (void)med;
+    (void)head_b;
     t_stack *last;
     t_stack *temp;
     int rotate_counter;
-    int a;
-    int b;
+    int k;
     int rrotate_counter;
     
     rotate_counter = 0;
-    a = 0;
-    b = 0;
+    int u = 0;
     rrotate_counter = 0;
     temp = (*head_a);
-    last = (*head_a);
-    while (last ->next)
-        last = last->next;
-    while (min <= max)
+    last = to_the_last(head_a);
+    printf("The Min Is %d And The Max Is :  %d And The Med Is : %d\n",min,max,med);
+    k = min;
+    while (k < max)
     {
-        if ((temp)->content >= min || (temp)->content <= max)
+        if ((temp)->index >= min && (temp)->index < max)
         {
             while (rotate_counter > 0)
             {
                 rotate_counter--;
                 ft_ra(head_a);
             }
-            ft_pb(&temp, head_b);
-            min++;
+            printf("To Be Pushed : %d\n",temp->index);
+            ft_pb(head_a, head_b);
+            if (temp ->index < med)
+                ft_rb(head_b);
+            k++;
             temp = (*head_a);
+            last = to_the_last(head_a);
         }
-        else if (last ->content >= min || last->content <= max)
+        else if (last ->index >= min && last->index < max)
         {
-            while (rotate_counter > 0)
+            while (rrotate_counter > 0)
             {
                 rrotate_counter--;
-                ft_rra(head_a);
+                ft_rrb(head_a);
             }
-            ft_pb(&temp, head_b);
-            min++;
+            ft_pb(head_a, head_b);
+            if (last->index < med)
+                ft_rb(head_b);
+            k++;
+            temp = (*head_a);
+            last = to_the_last(head_a);
         }
         else
         {
@@ -238,6 +253,8 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
             temp = temp ->next;
             last = last->previous;
         }
+        // printf("The Temp Is : %d And The Last Is : %d And The Head Is : %d\n",(temp)->index, last->index, (*head_a)->index);
+        u++;
     }
 }
 
@@ -260,6 +277,8 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     else if (size > 5)
     {
         change_values_to_indexes(head_a, size);
+        while (size > 5 && u < 2)
+        {
             to_be_pushed = ((size - 5) / 3) + 1;
             max += to_be_pushed;
             med = (max + min) / 2;
@@ -267,6 +286,7 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
             min = max;
             size -= to_be_pushed;
             u++;
+        }
         // b_to_a(head_a, head_b);
     }
 }
@@ -294,18 +314,16 @@ int main(int ac, char **av)
     while (i < ac)
         push(&stack_a, ft_atoi(av[i++]));
     i = 0;
-    // push_swap(&stack_a, &stack_b);
-    // sort_five(&stack_a, &stack_b);
-    // printing(&stack_a);
-    while (stack_a->next)
+    push_swap(&stack_a, &stack_b);
+    while (stack_a)
     {
-        printf("data of stack a : %d\n", stack_a->content);
+        printf("data of stack a : %d\n", stack_a->index);
         stack_a = stack_a->next;
     }
     printf("---------------\n");
     while (stack_b)
     {
-        printf("data of stack b : %d\n", stack_b->content);
+        printf("data of stack b : %d\n", stack_b->index);
         stack_b = stack_b->next;
     }
 }
