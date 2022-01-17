@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:05:56 by ael-hiou          #+#    #+#             */
-/*   Updated: 2021/12/22 19:27:16 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/01/16 18:55:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ void	ft_lstadd_back(t_stack **lst, t_stack *new)
 
 	if (!lst)
 		return ;
-	if (*lst)
+	if (!(*lst))
+	{
+		*lst = new;
+		new ->previous = NULL;
+		return ;
+	}
+	else
 	{
 		save = ft_lstlast(*lst);
 		save -> next = new;
-		return ;
+		new ->previous = save;
 	}
-	*lst = new;
 }

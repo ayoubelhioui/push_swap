@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 11:18:17 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/01/15 17:05:26 by marvin           ###   ########.fr       */
+/*   Updated: 2022/01/16 18:29:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_stack
 	int				content;
 	int 			index;
 	struct s_stack	*next;
+	struct s_stack	*previous;
 }					t_stack;
 void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_stack **lst, t_stack *new);

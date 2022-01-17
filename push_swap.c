@@ -88,12 +88,27 @@ void    ft_pa(t_stack **head_a, t_stack **head_b)
 }
 void    sort_trio(t_stack **head_a)
 {
-    if ((((*head_a)->content > (*head_a)->next->content)) && ((*head_a)->next->content < (*head_a)->next->next->content)))
+    if ((*head_a)->content < (*head_a)->next->content)
     {
-        ft_ra(head_a);
-        ft_sa(head_a);
+        if ((*head_a)->next->content > (*head_a)->next->next->content)
+        {
+            ft_sa(head_a);
+            ft_ra(head_a);
+        }
     }
-    // else if ((*head_a)->content > (*head_a)->next->content && (*head_a)->)
+    else if ((((*head_a)->content > (*head_a)->next->content) && ((*head_a)->content < (*head_a)->next->next->content)))
+        ft_sa(head_a);
+    else if ((*head_a)->content > (*head_a)->next->content)
+    {
+        if ((*head_a)->next->content > (*head_a)->next->next->content)
+        {
+            ft_sa(head_a);
+            ft_rra(head_a);
+        }
+        else if ((*head_a)->next->content < (*head_a)->next->next->content)
+            ft_ra(head_a);
+
+    }
 
 }
 
@@ -111,7 +126,7 @@ int    get_index(int value ,int *array, int size)
     return (i);
 
 }
-int *ft_allocate_and_sort(t_stack **head, int size)
+int *allocate(t_stack **head, int size)
 {
     t_stack *temp;
     int *array;
@@ -125,7 +140,6 @@ int *ft_allocate_and_sort(t_stack **head, int size)
         array[i++] = temp->content;
         temp = temp ->next;
     }
-    quick_sort(array, 0, (i - 1));
     return (array);
 }
 
@@ -144,19 +158,86 @@ void    change_values_to_indexes(t_stack **head_a, int size)
     }
 }
 
-void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
+void    sort_five(t_stack **head_a, t_stack **head_b)
 {
-    (void)med;
-    printf("The Min : %d and The Max IS : %d\n",min, max);
-    while (min <= max)
+    int *array;
+    array = ft_allocate_and_sort(head_a, 5);
+    int i = 0;
+    while (i < 2)
     {
-        if ((*head_a)->index == min)
+        if (array[i] == (*head_a)->content)
         {
+            i++;
             ft_pb(head_a, head_b);
-            min++;
         }
         else
             ft_ra(head_a);
+    }
+    sort_trio(head_a);
+    ft_pa(head_a, head_b);
+    ft_pa(head_a, head_b);
+}
+
+void    b_to_a(t_stack **head_a, t_stack **head_b)
+{
+    int size;
+
+    size = ft_lstsize((*head_b));
+    while (size > 0)
+    {
+        ft_pa(head_a, head_b);
+        size--;
+    }
+}
+
+void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
+{
+    (void)med;
+    t_stack *last;
+    t_stack *temp;
+    int rotate_counter;
+    int a;
+    int b;
+    int rrotate_counter;
+    
+    rotate_counter = 0;
+    a = 0;
+    b = 0;
+    rrotate_counter = 0;
+    temp = (*head_a);
+    last = (*head_a);
+    while (last ->next)
+        last = last->next;
+    while (min <= max)
+    {
+        if ((temp)->content >= min || (temp)->content <= max)
+        {
+            while (rotate_counter > 0)
+            {
+                rotate_counter--;
+                ft_ra(head_a);
+            }
+            ft_pb(&temp, head_b);
+            min++;
+            temp = (*head_a);
+        }
+        else if (last ->content >= min || last->content <= max)
+        {
+            while (rotate_counter > 0)
+            {
+                rrotate_counter--;
+                ft_rra(head_a);
+            }
+            ft_pb(&temp, head_b);
+            min++;
+        }
+        else
+        {
+            rrotate_counter++;
+            rotate_counter++;
+            temp = temp ->next;
+            last = last->previous;
+        }
     }
 }
 
@@ -167,8 +248,11 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     int min;
     int max;
     int med;
+    int u;
 
+    u = 0;
     min = 0;
+    max = 0;
     size = ft_lstsize((*head_a));
     (void)head_b;
     if (size == 3)
@@ -176,17 +260,17 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     else if (size > 5)
     {
         change_values_to_indexes(head_a, size);
-        while (size >= 5)
-        {
             to_be_pushed = ((size - 5) / 3) + 1;
-            max += to_be_pushed - 1;
+            max += to_be_pushed;
             med = (max + min) / 2;
             a_to_b(head_a, head_b, min, max, med);
-            min = max + 1;
+            min = max;
             size -= to_be_pushed;
-        }
+            u++;
+        // b_to_a(head_a, head_b);
     }
 }
+
 void    printing(t_stack **head_a)
 {
     t_stack *temp;
@@ -210,9 +294,10 @@ int main(int ac, char **av)
     while (i < ac)
         push(&stack_a, ft_atoi(av[i++]));
     i = 0;
-    push_swap(&stack_a, &stack_b);
+    // push_swap(&stack_a, &stack_b);
+    // sort_five(&stack_a, &stack_b);
     // printing(&stack_a);
-    while (stack_a)
+    while (stack_a->next)
     {
         printf("data of stack a : %d\n", stack_a->content);
         stack_a = stack_a->next;
