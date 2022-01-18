@@ -94,7 +94,6 @@ void    sort_trio(t_stack **head_a)
     {
         if ((*head_a)->next->content > (*head_a)->next->next->content)
         {
-            printf("Im Here :)\n");
             ft_sa(head_a);
             ft_ra(head_a);
         }
@@ -202,9 +201,35 @@ t_stack *to_the_last(t_stack **head_a)
         temp = temp ->next;
     return (temp);
 }
+
+void rotate_it(t_stack **head_a, t_stack **head_b, int rotation_number, int sign, int med)
+{
+    if (sign == 1)
+    {
+        // printf("R Is : %d\n", rotation_number);
+        while (rotation_number > 0)
+        {
+            ft_ra(head_a);
+            rotation_number--;
+        }
+        // printf("We Will Push : %d\n",(*head_a)->index);
+    }
+    else
+    {
+        // printf("R-1 : %d\n",rotation_number);
+        while (rotation_number >= 0)
+        {
+            ft_rra(head_a);
+            rotation_number--;
+        } 
+    }
+    ft_pb(head_a, head_b);
+    if ((*head_b)->index < med)
+        ft_rb(head_b);
+}
 void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
 {
-    (void)head_b;
+
     t_stack *last;
     t_stack *temp;
     int rotate_counter;
@@ -212,46 +237,29 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
     int rrotate_counter;
     
     rotate_counter = 0;
-    int u = 0;
-    // int a = 0;
-    rrotate_counter = 1;
+    rrotate_counter = 0;
     temp = (*head_a);
     last = to_the_last(head_a);
     k = min;
-    while (k < max)
+    while (k <= max)
     {
-            if (!last)
-                return;
-        if ((temp)->index >= min && (temp)->index < max)
+        if ((temp)->index >= min && (temp)->index <= max)
         {
-            // printf("The Number Of Rotation Is : %d And The Number We Will Push Is : %d\n",rotate_counter, temp->index);
-            while (rotate_counter > 0)
-            {
-                rotate_counter--;
-                ft_ra(head_a);
-            }
-            ft_pb(head_a, head_b);
-            if (temp ->index < med)
-                ft_rb(head_b);
+            rotate_it(head_a, head_b, rotate_counter, 1, med);
+            rotate_counter = 0;
             k++;
             temp = (*head_a);
             last = to_the_last(head_a);
+            rrotate_counter = 0;
         }
-        else if (last ->index >= min && last->index < max)
+        else if (last ->index >= min && last->index <= max)
         {
-            // printf("The Number Of Rotation Is : %d And The Number We Will Push Is : %d\n",rrotate_counter, last->index);
-             printf("the Min Is : %d And The Max Is : %d\n",min, max);
-            while (rrotate_counter > 0)
-            {
-                rrotate_counter--;
-                ft_rrb(head_a);
-            }
-            ft_pb(head_a, head_b);
-            if (last->index < med)
-                ft_rb(head_b);
+            rotate_it(head_a, head_b, rrotate_counter, 0, med);
+            rotate_counter = 0;
             k++;
             temp = (*head_a);
             last = to_the_last(head_a);
+            rrotate_counter = 0;
         }
         else
         {
@@ -262,8 +270,23 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
         }
         // printf("The Rotation is : %d And the Rrotation %d\n", rotate_counter,rrotate_counter);
         // printf("The Temp Is : %d And The Last Is : %d And The Head Is : %d\n",(temp)->index, last->index, (*head_a)->index);
-        u++;
     }
+}
+
+int    find_min(t_stack **head_a)
+{
+    t_stack *temp;
+    int min;
+
+    temp = (*head_a);
+    min = temp->index;
+    while (temp)
+    {
+        if (min > (temp)->index)
+            min = temp->index;
+        temp = temp->next;
+    }
+    return (min);
 }
 
 void    push_swap(t_stack **head_a, t_stack **head_b)
@@ -273,11 +296,11 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     int min;
     int max;
     int med;
-    int u;
+    // int u;
 
-    u = 0;
-    min = 0;
+    // u = 0;
     max = 0;
+    min = 0;
     size = ft_lstsize((*head_a));
     (void)head_b;
     if (size == 3)
@@ -285,17 +308,16 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     else if (size > 5)
     {
         change_values_to_indexes(head_a, size);
-        while (size > 5 && u < 4)
+        while (size > 5)
         {
-            to_be_pushed = ((size - 5) / 3) + 1;
-            max += to_be_pushed;
+            to_be_pushed = (size - 5) / 3 + 1;
+            min = find_min(head_a);
+            max = min + (to_be_pushed - 1);
             med = (max + min) / 2;
             a_to_b(head_a, head_b, min, max, med);
-            min = max;
-            size -= to_be_pushed;
-            u++;
+            size -= to_be_pushed; 
         }
-        // sort_five(head_a, head_b);
+        sort_five(head_a, head_b);
         // b_to_a(head_a, head_b);
     }
 }
@@ -337,5 +359,5 @@ int main(int ac, char **av)
         printf("data of stack b : %d\n", stack_b->index);
         stack_b = stack_b->next;
     }
-    printf("Elements Is B : %d\n",x);
+    // printf("Elements Is B : %d\n",x);
 }
