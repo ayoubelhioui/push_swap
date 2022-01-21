@@ -6,13 +6,14 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:37:23 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/01/16 18:32:10 by marvin           ###   ########.fr       */
+/*   Updated: 2022/01/21 11:50:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 #include "libft/libft.h"
+#define MAX_INT 2147483647
 typedef struct c_list
 {
     int chunk_length;
