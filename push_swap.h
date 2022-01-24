@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:37:23 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/01/21 12:44:28 by marvin           ###   ########.fr       */
+/*   Updated: 2022/01/24 17:14:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 #include "libft/libft.h"
 #define MAX_INT 2147483647
-#define FIVE 5
 #define ROTATE 1
 #define REVERSE_ROTATE 0
 typedef struct c_list

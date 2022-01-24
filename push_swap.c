@@ -29,7 +29,7 @@ void    ft_sa(t_stack **head)
     swap_content = temp->content;
     temp->content = (*head)->content;
     (*head)->content = swap_content;
-    // ft_putstr("sa\n");
+    ft_putstr("sa\n");
 }
 
 void    ft_ss(t_stack **head_a, t_stack **head_b)
@@ -56,7 +56,7 @@ void    ft_rra(t_stack **head)
     (*head)->next = NULL;
     (*head) = temp;
     ft_lstadd_front(head, last);
-    // ft_putstr("rra\n");
+    ft_putstr("rra\n");
 }
 
 void    ft_ra(t_stack **head)
@@ -69,7 +69,7 @@ void    ft_ra(t_stack **head)
     (*head) = (*head)->next;
     top ->next = NULL;
     ft_lstadd_back(head, top);
-    // ft_putstr("ra\n");
+    ft_putstr("ra\n");
 }
 
 void    push(t_stack **head, int value)
@@ -89,7 +89,7 @@ void    ft_pa(t_stack **head_a, t_stack **head_b)
     top = (*head_b);
     (*head_b) = (*head_b)->next;
     ft_lstadd_front(head_a,top);
-    // ft_putstr("pa\n");
+    ft_putstr("pa\n");
 }
 
 void    sort_trio(t_stack **head_a)
@@ -198,17 +198,17 @@ void multiple_rotations_a(t_stack **head_a, int rotation_number, int sign)
 
 }
 
-int    find_min(t_stack **head_a)
+t_stack *find_min(t_stack **head_a)
 {
     t_stack *temp;
-    int min;
+    t_stack *min;
 
     temp = (*head_a);
-    min = temp->index;
+    min = temp;
     while (temp)
     {
-        if (min > (temp)->index)
-            min = temp->index;
+        if (min->index > (temp)->index)
+            min = temp;
         temp = temp->next;
     }
     return (min);
@@ -217,18 +217,21 @@ int    find_min(t_stack **head_a)
 void    sort_five(t_stack **head_a, t_stack **head_b)
 {
     int i;
-    int min;
+    t_stack *min;
     int position;
+    int five;
 
     i = 0;
+    five = 5;
     while (i < 2)
     {
         min = find_min(head_a);
-        position = is_exist(head_a, min);
-        if (position > (FIVE / 2))
-            multiple_rotations_a(head_a, (FIVE - position) - 1, REVERSE_ROTATE);
+        position = is_exist(head_a, min->index);
+        if (position > (five / 2))
+            multiple_rotations_a(head_a, (five - position) - 1, REVERSE_ROTATE);
         else
             multiple_rotations_a(head_a, position, ROTATE);
+        five--;
         ft_pb(head_a, head_b);
         i++;
     }
@@ -263,7 +266,7 @@ void    multiple_rotations_b(t_stack **head_b, int rotation_number, int sign)
     {
         while (rotation_number > 0)
         {
-            ft_ra(head_b);
+            ft_rb(head_b);
             rotation_number--;
         }
     }
@@ -285,7 +288,6 @@ void    final_touch(t_stack **head_a)
         ft_rra(head_a);
     last = to_the_last(head_a);
     last ->index = last->previous->index + 1;
-    
 }
 
 void    b_to_a(t_stack **head_a, t_stack **head_b)
@@ -296,17 +298,14 @@ void    b_to_a(t_stack **head_a, t_stack **head_b)
 
     change_value(head_a);
     last = to_the_last(head_a);
-    size = ft_lstsize((*head_b));
     int k = 0;
     int i = 0;
-    while (size > 0)
+    while ((*head_b))
     {
+        size = ft_lstsize((*head_b));
         number = (*head_a)->index - 1;
         if (number == (*head_b)->index)
-        {
             ft_pa(head_a, head_b);
-            size--;
-        }
         else if (is_exist(head_b, number) != -1)
         {
             if ((*head_b)->index < (*head_a)->index && (*head_b)->index > last->index)
@@ -314,7 +313,6 @@ void    b_to_a(t_stack **head_a, t_stack **head_b)
                 ft_pa(head_a, head_b);
                 ft_ra(head_a);
                 last = last->next;
-                size--;
             }
             else
             {
@@ -324,7 +322,6 @@ void    b_to_a(t_stack **head_a, t_stack **head_b)
                 else
                     multiple_rotations_b(head_b, k, ROTATE);
                 ft_pa(head_a, head_b);
-                size--;
             }
         }
         else if (is_exist(head_b, number) == -1)
@@ -383,67 +380,102 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
     }
 }
 
-
-void    is_sorted(t_stack **head_a)
+int    is_sorted(t_stack **head_a)
 {
     t_stack *temp;
 
     temp = (*head_a);
-    while (temp)
+    while (temp->next)
     {
         if (temp->content > temp ->next ->content)
-        {
-            printf("Not Sorted And The Content Is : %d\n",temp->content);
-            return;
-        }
+            return (0);
         temp = temp->next;
     }
-    printf("Sorteed\n");
+    return (1);
 }
+
 void    push_swap(t_stack **head_a, t_stack **head_b)
 {
     int size;
     int to_be_pushed;
-    int min;
+    t_stack *min;
     int max;
     int med;
 
     max = 0;
-    min = 0;
     size = ft_lstsize((*head_a));
     change_values_to_indexes(head_a, size);
     if (size == 3)
         sort_trio(head_a);
-    else if (size > 5)
+    else if (size >= 5)
     {
         while (size > 5)
         {
             to_be_pushed = (size - 5) / 3 + 1;
             min = find_min(head_a);
-            max = min + (to_be_pushed - 1);
-            med = (max + min) / 2;
-            a_to_b(head_a, head_b, min, max, med);
-            size -= to_be_pushed; 
+            max = min->index + (to_be_pushed - 1);
+            med = (max + min->index) / 2;
+            a_to_b(head_a, head_b, min->index, max, med);
+            size -= to_be_pushed;
         }
         sort_five(head_a, head_b);
         b_to_a(head_a, head_b);
         final_touch(head_a);
     }
 }
-void    check_for_errors(t_stack **head_a)
-{
-    t_stack *temp;
 
-    temp = (*head_a);
-    while (temp)
+int   to_int(char *str)
+{
+	int			i;
+	int			sign;
+	int			saver;
+
+	i = 0;
+	saver = 0;
+	sign = 1;
+    if (str[i] == '-' || str[i] == '+')
     {
-        if (temp->content > MAX_INT)
-        {
-            printf("Error\n");
-            exit (1);
-        }
-        temp = temp->next;
-    }   
+        if (str[i] == '-')
+            sign = -1;
+        i++;
+    }
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		saver = saver * 10 + (str[i] - '0');
+		i++;
+	}
+	return (sign * saver);
+}
+
+void    check_for_duplicate(t_stack **head_a, int size)
+{
+    int *array;
+    int i;
+
+    i = 0;
+    array = allocate(head_a, size);
+    while (i < size)
+    {
+        // if (array[i] == array[i + 1])
+        // {
+        //     printf("Error\n");
+        //     exit(1);
+        // }
+        printf("Fuck : %d\n",array[i]);
+        i++;
+    }
+
+}
+ 
+void    check_for_errors(t_stack **head_a, int size)
+{
+    (void)size;
+    if (is_sorted(head_a) == 1)
+    {
+        printf("Error\n");
+        exit(1);
+    }
+    // check_for_duplicate(head_a, size);
 }
 
 int main(int ac, char **av)
@@ -455,22 +487,31 @@ int main(int ac, char **av)
     i = 1;
     stack_a = NULL;
     stack_b = NULL;
+    if (ac == 1)
+        exit(1);
     while (i < ac)
+    {
+        if (ft_atoi(av[i]) == -2147483648)
+        {
+            printf("Error\n");
+            exit(1);
+        }
         push(&stack_a, ft_atoi(av[i++]));
+    }
     i = 0;
+    // check_for_errors(&stack_a, ac - 1);
     push_swap(&stack_a, &stack_b);
-    while (stack_a)
-    {
-        printf("data of stack a : %d\n", stack_a->index);
-        stack_a = stack_a->next;
-    }
-    printf("---------------\n");
-    int x = 0;
-    while (stack_b)
-    {
-        x++;
-        printf("data of stack b : %d\n", stack_b->index);
-        stack_b = stack_b->next;
-    }
-    // printf("Elements Is B : %d\n",x);
+    // while (stack_a)
+    // {
+    //     printf("data of stack a : %d\n", stack_a->index);
+    //     stack_a = stack_a->next;
+    // }
+    // printf("---------------\n");
+    // int x = 0;
+    // while (stack_b)
+    // {
+    //     x++;
+    //     printf("data of stack b : %d\n", stack_b->index);
+    //     stack_b = stack_b->next;
+    // }
 }
