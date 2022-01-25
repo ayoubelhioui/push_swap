@@ -29,7 +29,7 @@ void    ft_sa(t_stack **head)
     swap_content = temp->content;
     temp->content = (*head)->content;
     (*head)->content = swap_content;
-    ft_putstr("sa\n");
+    // ft_putstr("sa\n");
 }
 
 void    ft_ss(t_stack **head_a, t_stack **head_b)
@@ -56,7 +56,7 @@ void    ft_rra(t_stack **head)
     (*head)->next = NULL;
     (*head) = temp;
     ft_lstadd_front(head, last);
-    ft_putstr("rra\n");
+    // ft_putstr("rra\n");
 }
 
 void    ft_ra(t_stack **head)
@@ -69,7 +69,7 @@ void    ft_ra(t_stack **head)
     (*head) = (*head)->next;
     top ->next = NULL;
     ft_lstadd_back(head, top);
-    ft_putstr("ra\n");
+    // ft_putstr("ra\n");
 }
 
 void    push(t_stack **head, int value)
@@ -89,7 +89,7 @@ void    ft_pa(t_stack **head_a, t_stack **head_b)
     top = (*head_b);
     (*head_b) = (*head_b)->next;
     ft_lstadd_front(head_a,top);
-    ft_putstr("pa\n");
+    // ft_putstr("pa\n");
 }
 
 void    sort_trio(t_stack **head_a)
@@ -177,7 +177,7 @@ int    is_exist(t_stack **head, int value)
     return (-1);
 }
 
-void multiple_rotations_a(t_stack **head_a, int rotation_number, int sign)
+void multiple_rotations_a(t_stack **head_a, t_stack **head_b,int rotation_number, int sign)
 {
     if (sign == ROTATE)
     {
@@ -195,6 +195,7 @@ void multiple_rotations_a(t_stack **head_a, int rotation_number, int sign)
             rotation_number--;
         } 
     }
+    ft_pb(head_a, head_b);
 
 }
 
@@ -228,9 +229,9 @@ void    sort_five(t_stack **head_a, t_stack **head_b)
         min = find_min(head_a);
         position = is_exist(head_a, min->index);
         if (position > (five / 2))
-            multiple_rotations_a(head_a, (five - position) - 1, REVERSE_ROTATE);
+            multiple_rotations_a(head_a, head_b,(five - position) - 1, REVERSE_ROTATE);
         else
-            multiple_rotations_a(head_a, position, ROTATE);
+            multiple_rotations_a(head_a, head_b,position, ROTATE);
         five--;
         ft_pb(head_a, head_b);
         i++;
@@ -348,8 +349,7 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
     {
         if ((temp)->index >= min && (temp)->index <= max)
         {
-            multiple_rotations_a(head_a, rotate_counter, ROTATE);
-            ft_pb(head_a, head_b);
+            multiple_rotations_a(head_a, head_b,rotate_counter, ROTATE);
             if ((*head_b)->index < med)
                  ft_rb(head_b);
             rotate_counter = 0;
@@ -360,8 +360,7 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
         }
         else if (last ->index >= min && last->index <= max)
         {
-            multiple_rotations_a(head_a, rrotate_counter, REVERSE_ROTATE);
-            ft_pb(head_a, head_b);
+            multiple_rotations_a(head_a, head_b, rrotate_counter, REVERSE_ROTATE);
             if ((*head_b)->index < med)
                 ft_rb(head_b);
             rotate_counter = 0;
@@ -393,7 +392,20 @@ int    is_sorted(t_stack **head_a)
     }
     return (1);
 }
+void    sort_four(t_stack **head_a, t_stack **head_b)
+{
+    t_stack *min;
+    int position;
 
+    min = find_min(head_a);
+    position = is_exist(head_a, min->index);
+    if (position > (FOUR / 2))
+        multiple_rotations_a(head_a, head_b,(FOUR - position) - 1,REVERSE_ROTATE);
+    else
+       multiple_rotations_a(head_a, head_b, position, ROTATE);
+    sort_trio(head_a);
+    ft_pa(head_a, head_b);
+}
 void    push_swap(t_stack **head_a, t_stack **head_b)
 {
     int size;
@@ -405,8 +417,15 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     max = 0;
     size = ft_lstsize((*head_a));
     change_values_to_indexes(head_a, size);
-    if (size == 3)
+    if (size == 2)
+    {
+        if ((*head_a)->content > (*head_a)->next->content)
+            ft_sa(head_a);
+    }
+    else if (size == 3)
         sort_trio(head_a);
+    else if (size == 4)
+        sort_four(head_a, head_b);
     else if (size >= 5)
     {
         while (size > 5)
@@ -491,7 +510,7 @@ int main(int ac, char **av)
         exit(1);
     while (i < ac)
     {
-        if (ft_atoi(av[i]) == -2147483648)
+        if (ft_atoi(av[i]) > MAX_INT || ft_atoi(av[i]) < MIN_INT)
         {
             printf("Error\n");
             exit(1);
@@ -499,19 +518,19 @@ int main(int ac, char **av)
         push(&stack_a, ft_atoi(av[i++]));
     }
     i = 0;
-    // check_for_errors(&stack_a, ac - 1);
+    check_for_errors(&stack_a, ac - 1);
     push_swap(&stack_a, &stack_b);
-    // while (stack_a)
-    // {
-    //     printf("data of stack a : %d\n", stack_a->index);
-    //     stack_a = stack_a->next;
-    // }
-    // printf("---------------\n");
-    // int x = 0;
-    // while (stack_b)
-    // {
-    //     x++;
-    //     printf("data of stack b : %d\n", stack_b->index);
-    //     stack_b = stack_b->next;
-    // }
+    while (stack_a)
+    {
+        printf("data of stack a : %d\n", stack_a->content);
+        stack_a = stack_a->next;
+    }
+    printf("---------------\n");
+    int x = 0;
+    while (stack_b)
+    {
+        x++;
+        printf("data of stack b : %d\n", stack_b->content);
+        stack_b = stack_b->next;
+    }
 }
