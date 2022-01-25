@@ -52,6 +52,18 @@ void    b_to_a(t_stack **head_a, t_stack **head_b)
     }
 }
 
+// void move_to_next()
+// {
+
+// }
+void    a_to_b_helper(t_stack **head_a, t_stack **head_b, int *rotation_counter, int med, int direction)
+{
+    multiple_rotations_a(head_a, head_b, *rotation_counter, direction);
+    if ((*head_b)->index < med)
+        ft_rb(head_b);
+    (*rotation_counter) = 0;
+}
+
 void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
 {
 
@@ -70,25 +82,25 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
     {
         if ((temp)->index >= min && (temp)->index <= max)
         {
-            multiple_rotations_a(head_a, head_b,rotate_counter, ROTATE);
-            if ((*head_b)->index < med)
-                 ft_rb(head_b);
-            rotate_counter = 0;
+            // multiple_rotations_a(head_a, head_b, rotate_counter, ROTATE);
+            // if ((*head_b)->index < med)
+            //      ft_rb(head_b);
+            a_to_b_helper(head_a, head_b, &rotate_counter, med, ROTATE);
+            rrotate_counter = 0;
             k++;
             temp = (*head_a);
             last = to_the_last(head_a);
-            rrotate_counter = 0;
         }
         else if (last ->index >= min && last->index <= max)
         {
-            multiple_rotations_a(head_a, head_b, rrotate_counter, REVERSE_ROTATE);
-            if ((*head_b)->index < med)
-                ft_rb(head_b);
+            // multiple_rotations_a(head_a, head_b, rrotate_counter, REVERSE_ROTATE);
+            // if ((*head_b)->index < med)
+            //     ft_rb(head_b);
+            a_to_b_helper(head_a, head_b, &rrotate_counter, med, REVERSE_ROTATE);
             rotate_counter = 0;
             k++;
             temp = (*head_a);
             last = to_the_last(head_a);
-            rrotate_counter = 0;
         }
         else
         {
@@ -124,15 +136,33 @@ void    sort_four(t_stack **head_a, t_stack **head_b)
     sort_trio(head_a);
     ft_pa(head_a, head_b);
 }
-void    push_swap(t_stack **head_a, t_stack **head_b)
+
+void    push_swap_helper(t_stack **head_a, t_stack **head_b, int size)
 {
-    int size;
-    int to_be_pushed;
     t_stack *min;
+    int to_be_pushed;
     int max;
     int med;
 
-    max = 0;
+    while (size > 5)
+    {
+        to_be_pushed = (size - 5) / 3 + 1;
+        min = find_min(head_a);
+        max = min->index + (to_be_pushed - 1);
+        med = (max + min->index) / 2;
+        a_to_b(head_a, head_b, min->index, max, med);
+        size -= to_be_pushed;
+    }
+    sort_five(head_a, head_b);
+    b_to_a(head_a, head_b);
+    final_touch(head_a);
+}
+
+void    push_swap(t_stack **head_a, t_stack **head_b)
+{
+    int size;
+
+
     size = ft_lstsize((*head_a));
     change_values_to_indexes(head_a, size);
     if (size == 2)
@@ -147,20 +177,7 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     else if (size == 5)
         sort_five(head_a, head_b);
     else
-    {
-        while (size > 5)
-        {
-            to_be_pushed = (size - 5) / 3 + 1;
-            min = find_min(head_a);
-            max = min->index + (to_be_pushed - 1);
-            med = (max + min->index) / 2;
-            a_to_b(head_a, head_b, min->index, max, med);
-            size -= to_be_pushed;
-        }
-        sort_five(head_a, head_b);
-        b_to_a(head_a, head_b);
-        final_touch(head_a);
-    }
+        push_swap_helper(head_a, head_b, size);
 }
 
 int main(int ac, char **av)
@@ -183,7 +200,6 @@ int main(int ac, char **av)
         }
         push(&stack_a, ft_atoi(av[i++]));
     }
-    i = 0;
     check_for_errors(&stack_a, ac - 1);
     push_swap(&stack_a, &stack_b);
     // while (stack_a)
