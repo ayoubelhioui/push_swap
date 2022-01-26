@@ -12,56 +12,70 @@
 
 #include "push_swap.h"
 
+void b_to_a_helper(t_stack **head_a, t_stack **head_b, int number, t_stack **last)
+{
+    int k;
+    int size;
+
+    size = ft_lstsize((*head_b));
+    if ((*head_b)->index < (*head_a)->index && (*head_b)->index > (*last)->index)
+    {
+        ft_pa(head_a, head_b, 1);
+        ft_ra(head_a, 1);
+        (*last) = (*last)->next;
+    }
+    else
+    {
+        k = is_exist(head_b, number);
+        if (k > (size / 2))
+            multiple_rotations_b(head_b, (size - k) - 1, REVERSE_ROTATE);
+        else
+            multiple_rotations_b(head_b, k, ROTATE);
+        ft_pa(head_a, head_b, 1);
+    }
+}
+
 void    b_to_a(t_stack **head_a, t_stack **head_b)
 {
     int number;
     t_stack *last;
-    int size;
 
-    change_value(head_a);
     last = to_the_last(head_a);
-    int k = 0;
-    int i = 0;
+    change_value(head_a);
     while ((*head_b))
     {
-        size = ft_lstsize((*head_b));
         number = (*head_a)->index - 1;
         if (number == (*head_b)->index)
-            ft_pa(head_a, head_b);
+            ft_pa(head_a, head_b, 1);
         else if (is_exist(head_b, number) != -1)
-        {
-            if ((*head_b)->index < (*head_a)->index && (*head_b)->index > last->index)
-            {
-                ft_pa(head_a, head_b);
-                ft_ra(head_a);
-                last = last->next;
-            }
-            else
-            {
-                k = is_exist(head_b, number);
-                if (k > (size / 2))
-                    multiple_rotations_b(head_b, (size - k) - 1, REVERSE_ROTATE);
-                else
-                    multiple_rotations_b(head_b, k, ROTATE);
-                ft_pa(head_a, head_b);
-            }
-        }
+            b_to_a_helper(head_a, head_b, number, &last);
         else if (is_exist(head_b, number) == -1)
-            ft_rra(head_a);
-        i++;
+            ft_rra(head_a, 1);
     }
 }
 
-// void move_to_next()
-// {
-
-// }
 void    a_to_b_helper(t_stack **head_a, t_stack **head_b, int *rotation_counter, int med, int direction)
 {
     multiple_rotations_a(head_a, head_b, *rotation_counter, direction);
     if ((*head_b)->index < med)
-        ft_rb(head_b);
+        ft_rb(head_b, 1);
     (*rotation_counter) = 0;
+}
+
+void    just_for_25_lines(t_stack **head_a, t_stack **last , t_stack **temp,int *k, int *rotation_counter)
+{
+    (*rotation_counter) = 0;
+    *k+= 1;
+    (*temp) = (*head_a);
+    (*last) = to_the_last(head_a);
+}
+
+void just_for_25_lines_1(t_stack **temp, t_stack **last, int *rotate_counter, int *rrotate_counter)
+{
+    (*last) = (*last)->previous;
+    (*temp) = (*temp)->next;
+    (*rotate_counter)+= 1;
+    (*rrotate_counter)+= 1;
 }
 
 void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
@@ -82,45 +96,19 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
     {
         if ((temp)->index >= min && (temp)->index <= max)
         {
-            // multiple_rotations_a(head_a, head_b, rotate_counter, ROTATE);
-            // if ((*head_b)->index < med)
-            //      ft_rb(head_b);
             a_to_b_helper(head_a, head_b, &rotate_counter, med, ROTATE);
-            rrotate_counter = 0;
-            k++;
-            temp = (*head_a);
-            last = to_the_last(head_a);
+            just_for_25_lines(head_a, &last, &temp, &k, &rrotate_counter);
         }
         else if (last ->index >= min && last->index <= max)
         {
-            // multiple_rotations_a(head_a, head_b, rrotate_counter, REVERSE_ROTATE);
-            // if ((*head_b)->index < med)
-            //     ft_rb(head_b);
             a_to_b_helper(head_a, head_b, &rrotate_counter, med, REVERSE_ROTATE);
-            rotate_counter = 0;
-            k++;
-            temp = (*head_a);
-            last = to_the_last(head_a);
+            just_for_25_lines(head_a, &last, &temp, &k, &rotate_counter);
         }
         else
-        {
-            rrotate_counter++;
-            rotate_counter++;
-            temp = temp ->next;
-            last = last->previous;
-        }
+            just_for_25_lines_1(&temp, &last, &rotate_counter, &rrotate_counter);
     }
 }
 
-t_stack *to_the_last(t_stack **head_a)
-{
-    t_stack *temp;
-
-    temp = (*head_a);
-    while (temp ->next)
-        temp = temp ->next;
-    return (temp);
-}
 
 void    sort_four(t_stack **head_a, t_stack **head_b)
 {
@@ -134,7 +122,7 @@ void    sort_four(t_stack **head_a, t_stack **head_b)
     else
        multiple_rotations_a(head_a, head_b, position, ROTATE);
     sort_trio(head_a);
-    ft_pa(head_a, head_b);
+    ft_pa(head_a, head_b, 1);
 }
 
 void    push_swap_helper(t_stack **head_a, t_stack **head_b, int size)
@@ -168,7 +156,7 @@ void    push_swap(t_stack **head_a, t_stack **head_b)
     if (size == 2)
     {
         if ((*head_a)->content > (*head_a)->next->content)
-            ft_sa(head_a);
+            ft_sa(head_a, 1);
     }
     else if (size == 3)
         sort_trio(head_a);

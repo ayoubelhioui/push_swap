@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 18:12:25 by ael-hiou          #+#    #+#              #
-#    Updated: 2021/12/24 15:13:46 by ael-hiou         ###   ########.fr        #
+#    Updated: 2022/01/25 23:42:40 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = @gcc
 RM = @rm -f
 CLIB = @ar rc
 CFLAGS = -Wextra -Werror -Wall
-SRC = ft_atoi.c ft_strdup.c ft_calloc.c ft_bzero.c ft_strlen.c ft_itoa.c
+SRC = ft_atoi.c ft_calloc.c ft_bzero.c ft_strncmp.c ft_itoa.c
 NAME = libft.a
 OBJECTFILE = $(SRC:.c=.o)
 BONUSC = ft_lstadd_back_bonus.c ft_lstsize_bonus.c ft_lstadd_front_bonus.c ft_lstnew_bonus.c ft_lstlast_bonus.c
