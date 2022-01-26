@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void b_to_a_helper(t_stack **head_a, t_stack **head_b, int number, t_stack **last)
+void    b_to_a_helper(t_stack **head_a, t_stack **head_b, int number, t_stack **last)
 {
     int k;
     int size;
@@ -108,7 +108,6 @@ void    a_to_b(t_stack **head_a, t_stack **head_b, int min, int max, int med)
             just_for_25_lines_1(&temp, &last, &rotate_counter, &rrotate_counter);
     }
 }
-
 
 void    sort_four(t_stack **head_a, t_stack **head_b)
 {
