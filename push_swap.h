@@ -6,7 +6,7 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:37:23 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/01 13:01:37 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/01 19:52:52 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 #define ROTATE 1
 #define REVERSE_ROTATE 0
 
+typedef struct s_variable{
+    int direction;
+    int med;
+    t_stack *last;
+    t_stack *temp;
+    int k;
+    int rotation_counter;
+}              variables;
 void    ft_putstr(char *str);
 void    ft_sb(t_stack **head, int print_or_non);
 void    ft_pa(t_stack **head_a, t_stack **head_b, int print_or_non);
@@ -30,6 +38,11 @@ void    ft_rr(t_stack **head_a, t_stack **head_b, int print_or_non);
 void    ft_rrr(t_stack **head_a, t_stack **head_b, int print_or_non);
 void    ft_rra(t_stack **head, int print_or_non);
 void    ft_rrb(t_stack **head, int print_or_non);
+void	a_to_b_helper(t_stack **head_a, t_stack **head_b, int *rotation_counter, variables var);
+void	just_for_25_lines_1(t_stack **temp, t_stack **last, int *rotate_counter);
+void	just_for_25_lines(t_stack **head_a, t_stack **last, t_stack **temp, int *k);
+void	initialization(t_stack **head_a, t_stack **temp, t_stack **last, int *rotation_counter);
+void	sort_four(t_stack **head_a, t_stack **head_b);
 void    ft_ss(t_stack **head_a, t_stack **head_b, int print_or_non);
 void    ft_sa(t_stack **head, int print_or_non);
 void    change_values_to_indexes(t_stack **head_a, int size);
