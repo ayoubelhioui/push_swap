@@ -6,7 +6,7 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:35:16 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/01 19:50:46 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:02:22 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	initialization(t_stack **head_a, t_stack **temp, \
 }
 
 void	a_to_b_helper(t_stack **head_a, t_stack **head_b, \
-		int *rotation_counter, variables var)
+		int *rotation_counter, t_variables var)
 {
 	multiple_rotations_a(head_a, head_b, *rotation_counter, var.direction);
 	if ((*head_b)->index < var.med)

@@ -33,7 +33,7 @@ void	b_to_a(t_stack **head_a, t_stack **head_b)
 
 void	a_to_b(t_stack **head_a, t_stack **head_b, int min, int max)
 {
-	variables	var;
+	t_variables	var;
 
 	initialization(head_a, &var.temp, &var.last, &var.rotation_counter);
 	var.k = min;

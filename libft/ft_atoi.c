@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 10:56:13 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/01/24 23:17:34 by marvin           ###   ########.fr       */
+/*   Updated: 2022/02/01 21:43:44 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ long long	ft_atoi(const char *str)
 {
 	int			i;
 	int			sign;
-	long long			saver;
+	long long	saver;
 
 	i = 0;
 	saver = 0;

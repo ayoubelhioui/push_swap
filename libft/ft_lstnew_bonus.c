@@ -6,11 +6,12 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 18:44:48 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/01/16 18:31:03 by marvin           ###   ########.fr       */
+/*   Updated: 2022/02/01 21:44:32 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 t_stack	*ft_lstnew(int content)
 {
 	t_stack	*element;
