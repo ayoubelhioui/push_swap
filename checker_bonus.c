@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/25 16:26:11 by marvin            #+#    #+#             */
-/*   Updated: 2022/01/25 16:26:11 by marvin           ###   ########.fr       */
+/*   Created: 2022/02/01 12:49:43 by ael-hiou          #+#    #+#             */
+/*   Updated: 2022/02/01 12:51:19 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void    checker_job(t_stack **head_a, t_stack **head_b)
     saver = get_next_line(0);
     while (saver)
     {
-        if (ft_strncmp(saver, "pa\n",4) == 0)
+        if (ft_strncmp(saver, "pa\n", 4) == 0)
             ft_pa(head_a, head_b, 0);
-        else if (ft_strncmp(saver, "pb\n",3) == 0)
+        else if (ft_strncmp(saver, "pb\n", 3) == 0)
             ft_pb(head_a, head_b, 0);
         else if (ft_strncmp(saver, "sa\n", 3) == 0)
             ft_sa(head_a, 0);

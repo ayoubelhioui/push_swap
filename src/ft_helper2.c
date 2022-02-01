@@ -29,7 +29,7 @@ int    is_exist(t_stack **head, int value)
     return (-1);
 }
 
-void multiple_rotations_a(t_stack **head_a, t_stack **head_b,int rotation_number, int sign)
+void multiple_rotations_a(t_stack **head_a, t_stack **head_b, int rotation_number, int sign)
 {
     if (sign == ROTATE)
     {

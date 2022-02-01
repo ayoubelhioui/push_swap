@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:37:23 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/01/26 14:06:27 by marvin           ###   ########.fr       */
+/*   Updated: 2022/02/01 13:01:37 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 #define FOUR 4
 #define ROTATE 1
 #define REVERSE_ROTATE 0
-typedef struct c_list
-{
-    int chunk_length;
-    struct c_list *next;
-}              t_chunks;
 
 void    ft_putstr(char *str);
 void    ft_sb(t_stack **head, int print_or_non);
@@ -56,6 +51,7 @@ void    push(t_stack **head, int value);
 int    is_sorted(t_stack **head_a);
 int     *allocate(t_stack **head, int size);
 void    quick_sort(int *a,int start, int end);
+void    b_to_a_helper(t_stack **head_a, t_stack **head_b, int number, t_stack **last);
 int     partition(int *a, int start, int end);
 void    ft_swap(int *a, int *b);
 #endif

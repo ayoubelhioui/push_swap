@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 11:29:20 by marvin            #+#    #+#             */
-/*   Updated: 2022/01/15 11:29:20 by marvin           ###   ########.fr       */
+/*   Created: 2022/02/01 12:00:20 by ael-hiou          #+#    #+#             */
+/*   Updated: 2022/02/01 12:00:20 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void    a_to_b_helper(t_stack **head_a, t_stack **head_b, int *rotation_counter,
     (*rotation_counter) = 0;
 }
 
-void    just_for_25_lines(t_stack **head_a, t_stack **last , t_stack **temp,int *k, int *rotation_counter)
+void    just_for_25_lines(t_stack **head_a, t_stack **last , t_stack **temp, int *k, int *rotation_counter)
 {
     (*rotation_counter) = 0;
     *k+= 1;
@@ -133,11 +133,11 @@ void    push_swap_helper(t_stack **head_a, t_stack **head_b, int size)
 
     while (size > 5)
     {
-        to_be_pushed = (size - 5) / 3 + 1;
+        to_be_pushed = (size - 5) / 4 + 1;
         min = find_min(head_a);
         max = min->index + (to_be_pushed - 1);
         med = (max + min->index) / 2;
-        a_to_b(head_a, head_b, min->index, max, med);
+        a_to_b(head_a, head_b, min->index, max, med);  
         size -= to_be_pushed;
     }
     sort_five(head_a, head_b);
@@ -176,7 +176,7 @@ int main(int ac, char **av)
     i = 1;
     stack_a = NULL;
     stack_b = NULL;
-    if (ac == 1)
+    if (ac == 1 || ac == 2)
         exit(1);
     while (i < ac)
     {
@@ -189,15 +189,4 @@ int main(int ac, char **av)
     }
     check_for_errors(&stack_a, ac - 1);
     push_swap(&stack_a, &stack_b);
-    // while (stack_a)
-    // {
-    //     printf("data of stack a : %d\n", stack_a->content);
-    //     stack_a = stack_a->next;
-    // }
-    // printf("---------------\n");
-    // while (stack_b)
-    // {
-    //     printf("data of stack b : %d\n", stack_b->content);
-    //     stack_b = stack_b->next;
-    // }
 }

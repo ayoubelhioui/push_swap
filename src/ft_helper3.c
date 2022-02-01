@@ -14,12 +14,8 @@
 
 void    check_for_errors(t_stack **head_a, int size)
 {
-    (void)size;
     if (is_sorted(head_a) == 1)
-    {
-        printf("Error\n");
         exit(1);
-    }
     check_for_duplicate(head_a, size);
 }
 
