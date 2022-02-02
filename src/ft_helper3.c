@@ -6,37 +6,47 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:38:00 by marvin            #+#    #+#             */
-/*   Updated: 2022/02/01 19:11:47 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:33:25 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	check_for_errors(t_stack **head_a, int size)
+void	check_for_errors(char **av)
 {
-	if (is_sorted(head_a) == 1)
-		exit(1);
-	check_for_duplicate(head_a, size);
-}
-
-void	check_for_duplicate(t_stack **head_a, int size)
-{
-	int	*array;
 	int	i;
 	int	j;
 
-	i = 0;
-	array = allocate(head_a, size);
-	while (i < size)
+	i = 1;
+	while (av[i])
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (av[i][j] == '-' || av[i][j] == '+')
+				j++;
+			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
+				error_printing();
+			j++;
+		}
+		i++;
+	}
+	check_for_duplicate(av);
+}
+
+void	check_for_duplicate(char **av)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (av[i])
 	{
 		j = i + 1;
-		while (j < size)
+		while (av[j])
 		{
-			if (array[i] == array[j])
-			{
-				printf("Error\n");
-				exit(1);
-			}
+			if (ft_atoi(av[i]) == ft_atoi(av[j]))
+				error_printing();
 			j++;
 		}
 		i++;

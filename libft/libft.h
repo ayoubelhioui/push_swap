@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 11:18:17 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/01 21:51:03 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 12:10:20 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ typedef struct s_stack
 	struct s_stack	*next;
 	struct s_stack	*previous;
 }					t_stack;
-void	*ft_calloc(size_t count, size_t size);
-void	ft_lstadd_back(t_stack **lst, t_stack *new);
-t_stack	*ft_lstnew(int content);
-t_stack	*ft_lstlast(t_stack *lst);
-void	ft_bzero(void *s, size_t n);
+void		*ft_calloc(size_t count, size_t size);
+void		ft_lstadd_back(t_stack **lst, t_stack *new);
+t_stack		*ft_lstnew(int content);
+t_stack		*ft_lstlast(t_stack *lst);
+void		ft_bzero(void *s, size_t n);
 long long	ft_atoi(const char *str);
-int		ft_strncmp(char *s1, char *s2, size_t n);
-void	ft_bzero(void *s, size_t n);
-void	ft_lstadd_front(t_stack **lst, t_stack *new);
-int		ft_lstsize(t_stack *lst);
-char	*ft_itoa(int c);
+int			ft_strncmp(char *s1, char *s2, size_t n);
+void		ft_bzero(void *s, size_t n);
+void		ft_lstadd_front(t_stack **lst, t_stack *new);
+int			ft_lstsize(t_stack *lst);
+char		*ft_itoa(int c);
 
 #endif

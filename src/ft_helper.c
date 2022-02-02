@@ -18,7 +18,6 @@ void	ft_sa(t_stack **head, int print_or_non)
 	int		swap;
 	int		swap_content;
 
-	(void)print_or_non;
 	if (!head || !(*head) || !(*head)->next)
 		return ;
 	temp = *head;
@@ -29,8 +28,8 @@ void	ft_sa(t_stack **head, int print_or_non)
 	swap_content = temp->content;
 	temp->content = (*head)->content;
 	(*head)->content = swap_content;
-	// if (print_or_non == 1)
-	// // ft_putstr("sa\n");
+	if (print_or_non == 1)
+		ft_putstr("sa\n");
 }
 
 void	ft_ss(t_stack **head_a, t_stack **head_b, int print_or_non)
@@ -44,7 +43,6 @@ void	ft_rra(t_stack **head, int print_or_non)
 	t_stack	*last;
 	t_stack	*temp;
 
-	(void)print_or_non;
 	if (!head || !(*head) || !(*head)->next)
 		return ;
 	temp = *head;
@@ -58,35 +56,33 @@ void	ft_rra(t_stack **head, int print_or_non)
 	(*head)->next = NULL;
 	(*head) = temp;
 	ft_lstadd_front(head, last);
-	// if (print_or_non == 1)
-	// // ft_putstr("rra\n");
+	if (print_or_non == 1)
+		ft_putstr("rra\n");
 }
 
 void	ft_ra(t_stack **head, int print_or_non)
 {
 	t_stack	*top;
 
-	(void)print_or_non;
 	if (!head || !(*head) || !(*head)->next)
 		return ;
 	top = (*head);
 	(*head) = (*head)->next;
 	top ->next = NULL;
 	ft_lstadd_back(head, top);
-	// if (print_or_non == 1)
-	// // ft_putstr("ra\n");
+	if (print_or_non == 1)
+		ft_putstr("ra\n");
 }
 
 void	ft_pa(t_stack **head_a, t_stack **head_b, int print_or_non)
 {
 	t_stack	*top;
 
-	(void)print_or_non;
 	if (!head_b || !(*head_b))
 		return ;
 	top = (*head_b);
 	(*head_b) = (*head_b)->next;
 	ft_lstadd_front(head_a, top);
-	// if (print_or_non == 1)
-	// // ft_putstr("pa\n");
+	if (print_or_non == 1)
+		ft_putstr("pa\n");
 }

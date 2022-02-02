@@ -37,7 +37,7 @@ void	a_to_b(t_stack **head_a, t_stack **head_b, int min, int max)
 
 	initialization(head_a, &var.temp, &var.last, &var.rotation_counter);
 	var.k = min;
-	var.med = (max - min) / 2;
+	var.med = (max + min) / 2;
 	while (var.k <= max)
 	{
 		if ((var.temp)->index >= min && (var.temp)->index <= max)
@@ -108,26 +108,14 @@ int	main(int ac, char **av)
 	stack_b = NULL;
 	if (ac == 1 || ac == 2)
 		exit(1);
+	check_for_errors(av);
 	while (i < ac)
 	{
 		if (ft_atoi(av[i]) > MAX_INT || ft_atoi(av[i]) < MIN_INT)
-		{
-			printf("Error\n");
-			exit(1);
-		}
+			error_printing();
 		push(&stack_a, ft_atoi(av[i++]));
 	}
-	check_for_errors(&stack_a, ac - 1);
+	if (is_sorted(&stack_a) == 1)
+		exit(1);
 	push_swap(&stack_a, &stack_b);
-	while (stack_a)
-	{
-		printf("Stack A : %d\n", stack_a->content);
-		stack_a = stack_a->next;
-	}
-	printf("------------\n");
-	while (stack_b)
-	{
-		printf("Stack A : %d\n", stack_b->content);
-		stack_b = stack_b->next;
-	}
 }

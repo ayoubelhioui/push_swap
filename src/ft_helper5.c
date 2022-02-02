@@ -6,7 +6,7 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:38:13 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/01 22:06:39 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:06:23 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,23 @@ void	b_to_a_helper(t_stack **head_a, \
 	}
 }
 
-void	ft_rrb(t_stack **head, int print_or_non)
+void	ft_putstr(char *str)
 {
-	t_stack	*last;
-	t_stack	*temp;
+	int	i;
 
-	if (!head || !(*head) || !(*head)->next)
-		return ;
-	temp = *head;
-	while ((*head)->next)
-	{
-		if ((*head)->next->next == NULL)
-			break ;
-		(*head) = (*head)->next;
-	}
-	last = (*head)->next;
-	(*head)->next = NULL;
-	(*head) = temp;
-	ft_lstadd_front(head, last);
-	(void)print_or_non;
-	// if (print_or_non == 1)
-	// //     ft_putstr("rrb\n");
+	i = 0;
+	while (str[i])
+		write(1, &str[i++], 1);
 }
 
 void	ft_rrr(t_stack **head_a, t_stack **head_b, int print_or_non)
 {
 	ft_rrb(head_b, print_or_non);
 	ft_rra(head_a, print_or_non);
+}
+
+void	error_printing(void)
+{
+	ft_putstr("Error\n");
+	exit(1);
 }

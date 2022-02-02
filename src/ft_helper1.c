@@ -92,4 +92,5 @@ void	change_values_to_indexes(t_stack **head_a, int size)
 		temp ->index = get_index(temp->content, array, size);
 		temp = temp->next;
 	}
+	free(array);
 }

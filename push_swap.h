@@ -6,7 +6,7 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:37:23 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/01 22:02:26 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:03:38 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # define REVERSE_ROTATE 0
 
 typedef struct s_variable{
-	int		direction;
-	int		med;
 	t_stack	*last;
 	t_stack	*temp;
+	int		direction;
+	int		med;
 	int		k;
 	int		rotation_counter;
 }				t_variables;
@@ -63,10 +63,11 @@ t_stack	*find_min(t_stack **head_a);
 void	sort_five(t_stack **head_a, t_stack **head_b);
 void	change_value(t_stack **head_a);
 void	final_touch(t_stack **head_a);
+void	error_printing(void);
 void	multiple_rotations_b(t_stack **head_b, int rotation_number, int sign);
 t_stack	*to_the_last(t_stack **head_a);
-void	check_for_duplicate(t_stack **head_a, int size);
-void	check_for_errors(t_stack **head_a, int size);
+void	check_for_duplicate(char **av);
+void	check_for_errors(char **av);
 void	push(t_stack **head, int value);
 int		is_sorted(t_stack **head_a);
 int		*allocate(t_stack **head, int size);
