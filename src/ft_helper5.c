@@ -6,18 +6,17 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:38:13 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/02 17:06:23 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:11:06 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	just_for_25_lines(t_stack **head_a, t_stack **last, \
-		t_stack **temp, int *k)
+void	just_for_25_lines(t_stack **head_a, t_variables *var)
 {
-	*k += 1;
-	(*temp) = (*head_a);
-	(*last) = to_the_last(head_a);
+	var ->k += 1;
+	var->temp = (*head_a);
+	var->last = to_the_last(head_a);
 }
 
 void	b_to_a_helper(t_stack **head_a, \

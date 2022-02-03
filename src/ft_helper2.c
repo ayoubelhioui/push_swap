@@ -51,17 +51,17 @@ void	multiple_rotations_a(t_stack **head_a, \
 	ft_pb(head_a, head_b, 1);
 }
 
-t_stack	*find_min(t_stack **head_a)
+int	find_min(t_stack **head_a)
 {
 	t_stack	*temp;
-	t_stack	*min;
+	int		min;
 
 	temp = (*head_a);
-	min = temp;
+	min = temp->index;
 	while (temp)
 	{
-		if (min->index > (temp)->index)
-			min = temp;
+		if (min > (temp)->index)
+			min = temp->index;
 		temp = temp->next;
 	}
 	return (min);
@@ -70,7 +70,7 @@ t_stack	*find_min(t_stack **head_a)
 void	sort_five(t_stack **head_a, t_stack **head_b)
 {
 	int		i;
-	t_stack	*min;
+	int		min;
 	int		position;
 	int		five;
 
@@ -79,7 +79,7 @@ void	sort_five(t_stack **head_a, t_stack **head_b)
 	while (i < 2)
 	{
 		min = find_min(head_a);
-		position = is_exist(head_a, min->index);
+		position = is_exist(head_a, min);
 		if (position > (five / 2))
 			multiple_rotations_a(head_a, head_b, \
 					(five - position) - 1, REVERSE_ROTATE);

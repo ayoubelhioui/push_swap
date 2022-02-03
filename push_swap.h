@@ -6,7 +6,7 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:37:23 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/02 17:03:38 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:19:26 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,10 @@ void	ft_rr(t_stack **head_a, t_stack **head_b, int print_or_non);
 void	ft_rrr(t_stack **head_a, t_stack **head_b, int print_or_non);
 void	ft_rra(t_stack **head, int print_or_non);
 void	ft_rrb(t_stack **head, int print_or_non);
-void	a_to_b_helper(t_stack **head_a, t_stack **head_b, \
-		int *rotation_counter, t_variables var);
-void	just_for_25_lines_1(t_stack **temp, \
-		t_stack **last, int *rotate_counter);
-void	just_for_25_lines(t_stack **head_a, \
-		t_stack **last, t_stack **temp, int *k);
-void	initialization(t_stack **head_a, t_stack **temp, \
-		t_stack **last, int *rotation_counter);
+void	a_to_b_helper(t_stack **head_a, t_stack **head_b, t_variables *var);
+void	just_for_25_lines_1(t_variables *var);
+void	just_for_25_lines(t_stack **head_a, t_variables *var);
+void	initialization(t_stack **head_a, t_variables *var);
 void	sort_four(t_stack **head_a, t_stack **head_b);
 void	ft_ss(t_stack **head_a, t_stack **head_b, int print_or_non);
 void	ft_sa(t_stack **head, int print_or_non);
@@ -59,7 +55,7 @@ void	ft_pa(t_stack **head_a, t_stack **head_b, int print_or_non);
 int		is_exist(t_stack **head, int value);
 void	multiple_rotations_a(t_stack **head_a, t_stack **head_b, \
 		int rotation_number, int sign);
-t_stack	*find_min(t_stack **head_a);
+int		find_min(t_stack **head_a);
 void	sort_five(t_stack **head_a, t_stack **head_b);
 void	change_value(t_stack **head_a);
 void	final_touch(t_stack **head_a);

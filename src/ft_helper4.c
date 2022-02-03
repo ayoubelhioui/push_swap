@@ -6,7 +6,7 @@
 /*   By: ael-hiou <ael-hiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:35:16 by ael-hiou          #+#    #+#             */
-/*   Updated: 2022/02/02 16:59:00 by ael-hiou         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:19:00 by ael-hiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,35 @@ t_stack	*to_the_last(t_stack **head_a)
 	return (temp);
 }
 
-void	just_for_25_lines_1(t_stack **temp, t_stack **last, int *rotate_counter)
+void	just_for_25_lines_1(t_variables *var)
 {
-	(*last) = (*last)->previous;
-	(*temp) = (*temp)->next;
-	(*rotate_counter) += 1;
+	var->last = var->last->previous;
+	var->temp = var->temp->next;
+	var->rotation_counter += 1;
 }
 
-void	initialization(t_stack **head_a, t_stack **temp, \
-		t_stack **last, int *rotation_counter)
+void	initialization(t_stack **head_a, t_variables *var)
 {
-	*temp = (*head_a);
-	*last = to_the_last(head_a);
-	(*rotation_counter) = 0;
+	var->temp = (*head_a);
+	var->last = to_the_last(head_a);
+	var->rotation_counter = 0;
 }
 
-void	a_to_b_helper(t_stack **head_a, t_stack **head_b, \
-		int *rotation_counter, t_variables var)
+void	a_to_b_helper(t_stack **head_a, t_stack **head_b, t_variables *var)
 {
-	multiple_rotations_a(head_a, head_b, *rotation_counter, var.direction);
-	if ((*head_b)->index < var.med)
+	multiple_rotations_a(head_a, head_b, var->rotation_counter, var->direction);
+	if ((*head_b)->index < var->med)
 		ft_rb(head_b, 1);
-	(*rotation_counter) = 0;
+	var->rotation_counter = 0;
 }
 
 void	sort_four(t_stack **head_a, t_stack **head_b)
 {
-	t_stack	*min;
+	int		min;
 	int		position;
 
 	min = find_min(head_a);
-	position = is_exist(head_a, min->index);
+	position = is_exist(head_a, min);
 	if (position > (FOUR / 2))
 		multiple_rotations_a(head_a, \
 				head_b, (FOUR - position) - 1, REVERSE_ROTATE);

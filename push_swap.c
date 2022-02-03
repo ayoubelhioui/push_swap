@@ -14,8 +14,8 @@
 
 void	b_to_a(t_stack **head_a, t_stack **head_b)
 {
-	int		number;
 	t_stack	*last;
+	int		number;
 
 	last = to_the_last(head_a);
 	change_value(head_a);
@@ -35,7 +35,7 @@ void	a_to_b(t_stack **head_a, t_stack **head_b, int min, int max)
 {
 	t_variables	var;
 
-	initialization(head_a, &var.temp, &var.last, &var.rotation_counter);
+	initialization(head_a, &var);
 	var.k = min;
 	var.med = (max + min) / 2;
 	while (var.k <= max)
@@ -43,32 +43,32 @@ void	a_to_b(t_stack **head_a, t_stack **head_b, int min, int max)
 		if ((var.temp)->index >= min && (var.temp)->index <= max)
 		{
 			var.direction = ROTATE;
-			a_to_b_helper(head_a, head_b, &var.rotation_counter, var);
-			just_for_25_lines(head_a, &var.last, &var.temp, &var.k);
+			a_to_b_helper(head_a, head_b, &var);
+			just_for_25_lines(head_a, &var);
 		}
 		else if (var.last ->index >= min && var.last->index <= max)
 		{
 			var.direction = REVERSE_ROTATE;
-			a_to_b_helper(head_a, head_b, &var.rotation_counter, var);
-			just_for_25_lines(head_a, &var.last, &var.temp, &var.k);
+			a_to_b_helper(head_a, head_b, &var);
+			just_for_25_lines(head_a, &var);
 		}
 		else
-			just_for_25_lines_1(&var.temp, &var.last, &var.rotation_counter);
+			just_for_25_lines_1(&var);
 	}
 }
 
 void	push_swap_helper(t_stack **head_a, t_stack **head_b, int size)
 {
-	t_stack	*min;
-	int		to_be_pushed;
+	int		min;
 	int		max;
+	int		to_be_pushed;
 
 	while (size > 5)
 	{
 		to_be_pushed = (size - 5) / 4 + 1;
 		min = find_min(head_a);
-		max = min->index + (to_be_pushed - 1);
-		a_to_b(head_a, head_b, min->index, max);
+		max = min + (to_be_pushed - 1);
+		a_to_b(head_a, head_b, min, max);
 		size -= to_be_pushed;
 	}
 	sort_five(head_a, head_b);
